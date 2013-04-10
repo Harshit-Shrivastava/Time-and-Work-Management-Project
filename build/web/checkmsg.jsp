@@ -4,6 +4,7 @@
     Author     : Harshit
 --%>
 
+<%@page import="dbconnect.dbconnect"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@ page language ="java" import="java.sql.*" %>
+        <%@ page language ="java" import="java.sql.*" import="Source Packages.dbconnect.*" %>
         <%
             String rec = request.getParameter("reciever");
             String msg = request.getParameter("msg");
@@ -20,23 +21,17 @@
             out.println(rec);
             out.println(msg);
             out.println(sen);
-            try {
-
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (Exception e) {
-                System.out.println("Exception in class");
-            }
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/OOAD", "root", "");
-            Statement st = con.createStatement();
-            int rs = st.executeUpdate("INSERT INTO `OOAD`.`message`"
-                    + " (`sender`, `reciever`, `message`) VALUES ('" + sen + "', '" + rec + "', '" + msg + "')");
+            
+            String query="INSERT INTO `OOAD`.`message`"
+                    + " (`sender`, `reciever`, `message`) VALUES ('" + sen + "', '" + rec + "', '" + msg + "')";
+            dbconnect db=new dbconnect(query);
+            int rs = db.insquery();
+            
             if (rs != 0) {
                 response.sendRedirect("profile.jsp");
             } else {
                 response.sendRedirect("sorry.jsp");
             }
-
-
         %>
     </body>
 </html>

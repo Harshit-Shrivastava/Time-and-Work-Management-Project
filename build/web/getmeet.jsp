@@ -4,6 +4,8 @@
     Author     : Harshit
 --%>
 
+<%@page import="javax.xml.transform.Source"%>
+<%@page import="dbconnect.dbconnect"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,33 +15,26 @@
     </head>
     <body>
         <h1><font color="#800000">Scheduled Meetings</font></h1>
-        <%@ page language ="java" import="java.sql.*" %>
-        <%
-        String rec=""+session.getAttribute("log");
-        try{
-    
-     Class.forName("com.mysql.jdbc.Driver");
-         }
-     catch(Exception e){
-     System.out.println("Exception in class");            
-     }
-        try{
-     Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/OOAD","root", "");
-     Statement st=con.createStatement();
-     ResultSet rs=st.executeQuery("select * from meeting limit 0,5");
-        %><hr></hr><%
-     while(rs.next())
-         {
-         String meet=rs.getString(1);
-         
-         %><br/>
-           <%      out.println(meet);
-           %><br/><hr>
-          <%
-         }
-     }catch(Exception e){}
-        
+            <%@ page language ="java" import="java.sql.*" import="Source Packages.dbconnect.*" %>
+            <%
+                String rec = "" + session.getAttribute("log");
+                try {
+                    String query = "select * from meeting limit 0,5";
+                    dbconnect db = new dbconnect(query);
+                    ResultSet rs = db.exquery();
+            %><hr><%
+                while (rs.next()) {
+                    String meet = rs.getString(1);
 
-%>
+        %><br/>
+        <%      out.println(meet);
+        %><br/><hr>
+        <%
+                }
+            } catch (Exception e) {
+            }
+
+
+        %>
     </body>
 </html>

@@ -4,6 +4,7 @@
     Author     : Harshit
 --%>
 
+<%@page import="dbconnect.dbconnect"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@ page language ="java" import="java.sql.*" %>
+        <%@ page language ="java" import="java.sql.*" import="Source Packages.dbconnect.*"%>
         <h1><font color="#800000">Project Discussions</font></h1><hr>
 
         </hr>
@@ -35,15 +36,10 @@
         <br/>
         <%
             try {
-
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (Exception e) {
-                System.out.println("Exception in class");
-            }
-            try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/OOAD", "root", "");
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("select * from discussions limit 0,4");
+                String query="select * from discussions limit 0,4";
+                
+                dbconnect db=new dbconnect(query);
+                ResultSet rs = db.exquery();
                 while (rs.next()) {
                     String data = rs.getString(1);
                     String user = rs.getString(2);

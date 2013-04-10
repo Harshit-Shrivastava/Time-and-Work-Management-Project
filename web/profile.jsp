@@ -4,6 +4,7 @@
     Author     : Harshit
 --%>
 
+<%@page import="dbconnect.dbconnect"%>
 <%@page import="com.sun.org.apache.bcel.internal.generic.TABLESWITCH"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,23 +23,7 @@
             function validateData()
             {
                 alert('called');
-                /*var xmlhttp;
-                if (window.XMLHttpRequest)
-                {// code for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp=new XMLHttpRequest();
-                }
-                else
-                {// code for IE6, IE5
-                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange=function()
-                {
-                    if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                    {
-                        document.getElementById("lol").innerHTML=xmlhttp.responseText;
-                    }
-                }
-                xmlhttp.open("GET","loginprocess.php",true);*/
+              
  
                 xmlhttp.send();
             }
@@ -82,9 +67,9 @@
     </head>
 
     <body onload="initialload();">
-        
+
         <div id="topshade"></div>
-        
+
         <div id="top"><img src="top.jpg" width="100%" height="150px"></div>
         <div id="heading"><center><font size="400%"><%out.println("globoSoft");%></font></center>
         </div>
@@ -112,19 +97,12 @@
                         String address = null;
                         String phno = null;
                         String email = null;
-                        try {
 
-                            Class.forName("com.mysql.jdbc.Driver");
-                        } catch (Exception e) {
-                            System.out.println("Exception in class");
-                        }
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/OOAD", "root", "");
-                        Statement st = con.createStatement();
-                        ResultSet rs = st.executeQuery("select * from profile where email='" + current + "'");
+                        String query = "select * from profile where email='" + current + "'";
 
+                        dbconnect db = new dbconnect(query);
+                        ResultSet rs = db.exquery();
 
-
-                        //out.println(current);
                         while (rs.next()) {
                             name = rs.getString(1);
                             department = rs.getString(2);
@@ -140,20 +118,20 @@
                     %>
                 </center>
                 <text-align:right>
-                
+
                     <table border="0">
-                <%               
-                    out.println("<tr><td>Department </td>" + "<td>"+department+"</td></tr>");    
-                                       out.println("<br/><tr><td>Address </td>" + "<td>"+address+"</td></tr>");
-                        out.println("<br/><tr><td>Phone number </td>" +"<td>"+ phno+"</td></tr>");
-                        out.println("<br/><tr><td>E-mail " +"<td>"+ email+"</td></tr>");
-                    }
+                        <%
+                                out.println("<tr><td>Department </td>" + "<td>" + department + "</td></tr>");
+                                out.println("<br/><tr><td>Address </td>" + "<td>" + address + "</td></tr>");
+                                out.println("<br/><tr><td>Phone number </td>" + "<td>" + phno + "</td></tr>");
+                                out.println("<br/><tr><td>E-mail " + "<td>" + email + "</td></tr>");
+                            }
 
 
 
-                %>   
+                        %>   
                     </table>
-                </align:right>
+                    </align:right>
             </div></div>
 
 

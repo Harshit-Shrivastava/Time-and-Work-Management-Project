@@ -18,24 +18,22 @@
             <br/>
             Enter password &nbsp;<input type="password" name="pass" size="32">
             <%@page import="java.util.Random"%>
-            <%Random rand = new Random(); 
-               int a=rand.nextInt(11);
-               int b=rand.nextInt(11);
-               int sum=a+b;
-               %>
-               <br/>
-               <%
-               out.println(a+"+"+b+"=");
-               session.setAttribute("Sum",sum);
-               //session.getAttribute(Sum);
-               //out.println(session.getAttribute("Sum"));
-            
-                    %>
-                    
-               <input type="text" name="user" size="5">     
+            <%Random rand = new Random();
+                int a = rand.nextInt(11);
+                int b = rand.nextInt(11);
+                int sum = a + b;
+            %>
+            <br/>
+            <%
+                out.println(a + "+" + b + "=");
+                session.setAttribute("Sum", sum);
+
+            %>
+
+            <input type="text" name="user" size="5">     
             <br/><input type="submit" value="submit">
         </form>
 
-        
+
     </body>
 </html>
